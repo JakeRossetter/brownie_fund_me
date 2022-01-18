@@ -1,0 +1,30 @@
+# in here we are telling brownie to download a package from github thats used for downloading chainlink contracts
+#referring to the import "@chainlink/contracts/... section of FundMe.sol
+#the below code is how we tell brownie where specifically in github to download the package from
+# https://github.com/smartcontractkit/chainlink-brownie-contracts
+dependencies:
+  - smartcontractkit/chainlink-brownie-contracts@1.1.1
+#need to tell brownie that whenever were using import @chainlink/... in a sol file, were referring to this import
+#more specifically, we need to tell the brownie compiler
+compiler:
+  solc:
+    remappings:
+      # telling the compiler that whenever it sees @chainlink, were referring to this smartcontractkit package
+      - "@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1"
+
+dotenv: .env
+wallets:
+  from_key: ${PRIVATE_KEY}
+
+  #for chainlink eth/usd price feeds - addresses for each network
+networks:
+  rinkeby:
+    eth_usd_price_feed: "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e"
+    verify: True
+  mainnet-fork-dev:
+    eth_usd_price_feed: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419'
+    verify: False
+  development:
+    verify: False
+  ganache-local:
+    verify: False
